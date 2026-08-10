@@ -1,7 +1,7 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  srcDir: 'docs',
+//  srcDir: 'docs',
   title: "我的 OI 笔记",
   description: "备战 NOIP 的知识库",
 

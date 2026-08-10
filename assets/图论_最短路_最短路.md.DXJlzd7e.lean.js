@@ -1,1 +1,0 @@
-import{_ as n,o as t,c as s,a0 as u}from"./chunks/framework.DQOulFGV.js";const e=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"图论/最短路/最短路.md","filePath":"图论/最短路/最短路.md"}'),d={name:"图论/最短路/最短路.md"};function v(o,i,p,l,m,k){return t(),s("div",null,[...i[0]||(i[0]=[u("",65)])])}const r=n(d,[["render",v]]);export{e as __pageData,r as default};
