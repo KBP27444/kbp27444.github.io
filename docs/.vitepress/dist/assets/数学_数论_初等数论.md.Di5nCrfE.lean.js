@@ -1,0 +1,1 @@
+import{_ as p,o as i,c as m,a0 as d}from"./chunks/framework.DQOulFGV.js";const r=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"数学/数论/初等数论.md","filePath":"数学/数论/初等数论.md"}'),n={name:"数学/数论/初等数论.md"};function b(o,a,t,x,c,g){return i(),m("div",null,[...a[0]||(a[0]=[d("",55)])])}const l=p(n,[["render",b]]);export{r as __pageData,l as default};

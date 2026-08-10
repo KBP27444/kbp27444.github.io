@@ -1,0 +1,1 @@
+import{_ as u,o as i,c as p,a0 as t}from"./chunks/framework.DQOulFGV.js";const b=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"图论/LCA/LCA.md","filePath":"图论/LCA/LCA.md"}'),n={name:"图论/LCA/LCA.md"};function c(v,a,r,d,e,l){return i(),p("div",null,[...a[0]||(a[0]=[t("",45)])])}const s=u(n,[["render",c]]);export{b as __pageData,s as default};

@@ -1,0 +1,1 @@
+import{_ as a,o as v,c as n,a0 as p}from"./chunks/framework.DQOulFGV.js";const c=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"图论/二分图/二分图.md","filePath":"图论/二分图/二分图.md"}'),t={name:"图论/二分图/二分图.md"};function o(e,u,r,m,i,s){return v(),n("div",null,[...u[0]||(u[0]=[p("",21)])])}const l=a(t,[["render",o]]);export{c as __pageData,l as default};
