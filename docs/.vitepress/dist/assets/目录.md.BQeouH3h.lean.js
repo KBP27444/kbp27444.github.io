@@ -1,1 +1,0 @@
-import{_ as l,o as e,c as i,a2 as r}from"./chunks/framework.DN2Z288_.js";const c=JSON.parse('{"title":"📖 全部笔记目录","description":"","frontmatter":{},"headers":[],"relativePath":"目录.md","filePath":"目录.md"}'),h={name:"目录.md"};function t(o,a,n,f,u,d){return e(),i("div",null,[...a[0]||(a[0]=[r("",21)])])}const I=l(h,[["render",t]]);export{c as __pageData,I as default};
