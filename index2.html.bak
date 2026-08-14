@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KBP27444 的资源站</title>
+    <style>
+        body { font-family: 'Segoe UI', sans-serif; text-align: center; padding: 60px 20px; background: #f0f2f5; margin: 0; }
+        h1 { color: #1e2a3a; font-size: 2.5rem; }
+        p { color: #555; }
+        .links { margin-top: 40px; }
+        .links a {
+            display: inline-block;
+            margin: 10px 20px;
+            padding: 16px 32px;
+            background: #1e2a3a;
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.2rem;
+            transition: background 0.2s;
+        }
+        .links a:hover { background: #2c3e5a; }
+    </style>
+</head>
+<div style="margin-top: 50px; text-align: left; max-width: 600px; margin-left: auto; margin-right: auto; color: #888; font-size: 13px; border-top: 1px solid #ddd; padding-top: 20px;">
+    <h3 style="color: #555; font-weight: normal;">📋 更新日志</h3>
+    <ul style="list-style: none; padding: 0;">
+        <li style="padding: 4px 0;"><strong>v2.1.0</strong> <span style="color: #aaa;">· 2026-08-14</span> — 添加“物理小球”子站点；导航页新增入口</li>
+        <li style="padding: 4px 0;"><strong>v2.0.0</strong> <span style="color: #aaa;">· 2026-08-14</span> — 笔记站迁移至 <code>/OI笔记站/</code> 子目录；根目录改为导航页</li>
+        <li style="padding: 4px 0;"><strong>v1.1.0</strong> <span style="color: #aaa;">· 2026-08-10</span> — OI 笔记站正式上线，含 20+ 篇算法笔记</li>
+        <li style="padding: 4px 0;"><strong>v1.0.0</strong> <span style="color: #aaa;">· 2026-07-25</span> — 网站搭建完成（简易 OJ 页面），绑定域名</li>
+    </ul>
+</div>
+<body>
+    <h1>🚀 KBP 的资源站</h1>
+    <p>欢迎访问我的个人资源导航中心</p>
+    <div class="links">
+        <a href="/OI笔记站/">📚 OI 笔记站</a>
+	<a href="/物理小球/">🎱 物理小球</a>
+        <!-- 以后可以在这里添加更多链接 -->
+    </div>
+</body>
+</html>

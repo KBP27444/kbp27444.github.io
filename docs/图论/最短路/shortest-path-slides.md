@@ -1,19 +1,7 @@
----
-marp: true
-theme: default
-size: 16:9
-paginate: true
-footer: "算法竞赛课件 · 图论"
----
-
-<!-- _class: lead -->
-
 # 最短路
 ## Shortest Path
 
 **Floyd · Dijkstra · Bellman–Ford · SPFA · Johnson**
-
-<!-- OI Wiki 课件 · `graph/shortest-path` -->
 
 ---
 
@@ -51,8 +39,6 @@ $$dis[v] \le dis[u] + w(u,v)$$
 
 ---
 
-<!-- _class: lead -->
-
 ## 一、Floyd 算法
 ### 全源最短路 · $O(n^3)$
 
@@ -89,16 +75,19 @@ for (int k = 1; k <= n; k++)
 for (int i = 1; i <= n; i++)
     for (int j = 1; j <= n; j++)
         f[i][j] = (i == j) ? 0 : INF;
+
 // 读入边
 for (int i = 0; i < m; i++) {
     int u, v, w; cin >> u >> v >> w;
     f[u][v] = min(f[u][v], w);
 }
+
 // Floyd 核心
 for (int k = 1; k <= n; k++)
     for (int i = 1; i <= n; i++)
         for (int j = 1; j <= n; j++)
             f[i][j] = min(f[i][j], f[i][k] + f[k][j]);
+
 // 负环检测：检查对角线
 for (int i = 1; i <= n; i++)
     if (f[i][i] < 0) { /* 存在负环 */ }
@@ -114,8 +103,6 @@ for (int i = 1; i <= n; i++)
 
 在 Floyd 第 $k$ 轮枚举 $i, j < k$：
 $$ans = \min(ans,\ f[i][j] + w(i, k) + w(k, j))$$
-
----
 
 ```cpp
 int ans = INF;
@@ -151,15 +138,13 @@ for (int k = 1; k <= n; k++)
 
 **bitset 优化**到 $O(n^3 / w)$：
 ```cpp
-bitset f[N];
+bitset<N> f[N];
 for (int k = 1; k <= n; k++)
     for (int i = 1; i <= n; i++)
         if (f[i][k]) f[i] |= f[k];
 ```
 
 ---
-
-<!-- _class: lead -->
 
 ## 二、Dijkstra 算法
 ### 单源最短路 · 非负权图 · $O(m \log m)$
@@ -234,7 +219,7 @@ vector<pair<int,int>> g[N];  // {v, w}
 
 void dijkstra(int s) {
     fill(dis + 1, dis + n + 1, INF);
-    // 小根堆：{距离, 节点}
+    // 小根堆：{距离，节点}
     priority_queue<pair<ll,int>, vector<pair<ll,int>>, greater<>> pq;
     dis[s] = 0;
     pq.push({0, s});
@@ -273,8 +258,6 @@ void dijkstra(int s) {
 
 ---
 
-<!-- _class: lead -->
-
 ## 三、Bellman–Ford 算法
 ### 单源最短路 · 支持负权边 · $O(nm)$
 
@@ -289,7 +272,7 @@ void dijkstra(int s) {
 
 ```cpp
 struct Edge { int u, v, w; };
-vector edges;
+vector<Edge> edges;
 
 bool bellmanFord(int s) {
     memset(dis, 0x3f, sizeof dis);
@@ -337,8 +320,6 @@ int bellmanFord(int s, int k) {
 
 ---
 
-<!-- _class: lead -->
-
 ## 四、SPFA 算法
 ### Bellman–Ford 的队列优化
 
@@ -352,8 +333,6 @@ Bellman–Ford 每轮扫描全部边，很多是浪费的。SPFA 用队列只维
 被松弛 → 入队 → 出队时用它的出边松弛 → 被松弛者再次入队 → ...
 ```
 
----
-
 ```cpp
 int dis[N], cnt[N];  // cnt[i] = 到 i 的最短路经过的边数
 bool inq[N];          // 是否在队列中
@@ -361,7 +340,7 @@ bool inq[N];          // 是否在队列中
 bool spfa(int s) {
     memset(dis, 0x3f, sizeof dis);
     dis[s] = 0; inq[s] = true;
-    queue q; q.push(s);
+    queue<int> q; q.push(s);
 
     while (!q.empty()) {
         int u = q.front(); q.pop();
@@ -399,8 +378,6 @@ for (int i = 1; i <= n; i++) {
 }
 ```
 
----
-
 **SPFA 的优化**：SLF（Small Label First，小的插队首）、LLL（Large Label Last，大的插队尾）。
 
 > ⚠️ SPFA 平均快但最坏 $O(nm)$，可能被出题人卡掉。正权图请用 Dijkstra！
@@ -426,8 +403,6 @@ inq[u] = false;  // 出队后还可能再入队！
 ```
 
 ---
-
-<!-- _class: lead -->
 
 ## 五、Johnson 算法
 ### 全源最短路 · 支持负权边 · $O(nm \log m)$
@@ -490,13 +465,9 @@ for (int u = 1; u <= n; u++) {
 }
 ```
 
----
-
 复杂度 $O(nm + n \cdot m \log m) = O(nm \log m)$
 
 ---
-
-<!-- _class: lead -->
 
 ## 六、差分约束系统
 
@@ -537,8 +508,6 @@ $$x_i - x_j \le c \quad \Longleftrightarrow \quad x_i \le x_j + c$$
 | P4926 | [1007] 倍杀测量者 | 差分约束 + 二分 |
 
 ---
-
-<!-- _class: lead -->
 
 ## 七、算法选择与总结
 
@@ -603,7 +572,4 @@ $$x_i - x_j \le c \quad \Longleftrightarrow \quad x_i \le x_j + c$$
 
 ---
 
-<!-- _class: lead -->
-
 # Thanks！
-

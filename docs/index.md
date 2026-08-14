@@ -8,7 +8,7 @@ hero:
   actions:
     - theme: brand
       text: 开始阅读 →
-      link: /目录
+      link: 目录
     - theme: alt
       text: GitHub 仓库
       link: https://github.com/KBP27444/kbp27444.github.io

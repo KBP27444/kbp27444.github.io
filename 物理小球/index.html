@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>物理小球</title>
+    <style>
+        body { margin: 0; background: #1a1a2e; display: flex; justify-content: center; align-items: center; height: 100vh; }
+        canvas { background: #16213e; border-radius: 20px; box-shadow: 0 0 30px #0f3460; display: block; cursor: crosshair; }
+        .info { position: fixed; bottom: 20px; color: #aaa; font-family: Arial; font-size: 14px; background: #0f0f1f; padding: 10px 20px; border-radius: 30px; }
+    </style>
+</head>
+<body>
+    <canvas id="c" width="700" height="500"></canvas>
+    <div class="info">🖱️ 点击生成新球 · 重力弹跳</div>
+    <script>
+        const canvas = document.getElementById('c');
+        const ctx = canvas.getContext('2d');
+        const W = canvas.width, H = canvas.height;
+
+        // 物理参数
+        const GRAVITY = 0.4;
+        const FRICTION = 0.99;
+        const BOUNCE = 0.7;
+
+        let balls = [];
+
+        // 初始几个球
+        for (let i = 0; i < 6; i++) {
+            balls.push({
+                x: 100 + i * 90,
+                y: 80 + i * 30,
+                vx: (Math.random() - 0.5) * 4,
+                vy: -Math.random() * 6,
+                r: 18 + Math.random() * 12,
+                color: `hsl(${i * 60}, 70%, 60%)`
+            });
+        }
+
+        // 鼠标事件生成球
+        canvas.addEventListener('mousedown', (e) => {
+            if (balls.length >= 100) return; // 限制最大数量为100
+            const rect = canvas.getBoundingClientRect();
+            const scaleX = canvas.width / rect.width;
+            const scaleY = canvas.height / rect.height;
+            const x = (e.clientX - rect.left) * scaleX;
+            const y = (e.clientY - rect.top) * scaleY;
+            // 随机生成一个新球
+            balls.push({
+                x: x,
+                y: y,
+                vx: (Math.random() - 0.5) * 8,
+                vy: -Math.random() * 8 - 2,
+                r: 15 + Math.random() * 20,
+                color: `hsl(${Math.random() * 360}, 80%, 60%)`
+            });
+        });
+
+        // 碰撞检测与响应（球-球）
+        function resolveCollisions() {
+            for (let i = 0; i < balls.length; i++) {
+                for (let j = i + 1; j < balls.length; j++) {
+                    const a = balls[i], b = balls[j];
+                    const dx = b.x - a.x, dy = b.y - a.y;
+                    const dist = Math.sqrt(dx*dx + dy*dy);
+                    const minDist = a.r + b.r;
+                    if (dist < minDist && dist > 0.001) {
+                        const nx = dx / dist, ny = dy / dist;
+                        // 重叠修正
+                        const overlap = (minDist - dist) / 2;
+                        a.x -= nx * overlap;
+                        a.y -= ny * overlap;
+                        b.x += nx * overlap;
+                        b.y += ny * overlap;
+                        // 相对速度沿法线分量
+                        const dvx = a.vx - b.vx, dvy = a.vy - b.vy;
+                        const dvn = dvx * nx + dvy * ny;
+                        if (dvn > 0) {
+                            const impulse = dvn * (1 + BOUNCE) / 2;
+                            a.vx -= impulse * nx;
+                            a.vy -= impulse * ny;
+                            b.vx += impulse * nx;
+                            b.vy += impulse * ny;
+                        }
+                    }
+                }
+            }
+        }
+
+        // 更新物理
+        function update() {
+            // 重力 & 速度限制
+            for (let b of balls) {
+                b.vy += GRAVITY;
+                b.vx *= FRICTION;
+                b.vy *= FRICTION;
+                // 防止飞出边界
+                if (b.x - b.r < 0) { b.x = b.r; b.vx = -b.vx * BOUNCE; }
+                if (b.x + b.r > W) { b.x = W - b.r; b.vx = -b.vx * BOUNCE; }
+                if (b.y - b.r < 0) { b.y = b.r; b.vy = -b.vy * BOUNCE; }
+                if (b.y + b.r > H) { b.y = H - b.r; b.vy = -b.vy * BOUNCE; }
+                // 位置更新
+                b.x += b.vx;
+                b.y += b.vy;
+            }
+
+            resolveCollisions();
+
+            // 限制最大速度
+            for (let b of balls) {
+                const sp = Math.sqrt(b.vx*b.vx + b.vy*b.vy);
+                if (sp > 20) { b.vx *= 20/sp; b.vy *= 20/sp; }
+            }
+        }
+
+        // 绘制
+        function draw() {
+            ctx.clearRect(0, 0, W, H);
+            // 画球（带光泽效果）
+            for (let b of balls) {
+                ctx.beginPath();
+                ctx.arc(b.x, b.y, b.r, 0, Math.PI*2);
+                ctx.fillStyle = b.color;
+                ctx.shadowColor = 'rgba(255,255,255,0.2)';
+                ctx.shadowBlur = 20;
+                ctx.fill();
+                ctx.shadowBlur = 0;
+                // 高光
+                ctx.beginPath();
+                ctx.arc(b.x - b.r*0.2, b.y - b.r*0.2, b.r*0.25, 0, Math.PI*2);
+                ctx.fillStyle = 'rgba(255,255,255,0.3)';
+                ctx.fill();
+            }
+            // 地面线（装饰）
+            ctx.strokeStyle = '#0f3460';
+            ctx.lineWidth = 2;
+            ctx.beginPath();
+            ctx.moveTo(0, H-2);
+            ctx.lineTo(W, H-2);
+            ctx.stroke();
+        }
+
+        // 动画循环
+        function loop() {
+            update();
+            draw();
+            requestAnimationFrame(loop);
+        }
+
+        loop();
+
+        // 窗口自适应
+        window.addEventListener('resize', () => {});
+    </script>
+</body>
+</html>

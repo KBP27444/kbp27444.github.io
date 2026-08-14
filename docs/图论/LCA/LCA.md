@@ -1,89 +1,136 @@
-2026 7 23 2026 7 23 1 / 30
+# 图论一
 
-1 ▶ ▶ ▶ Tarjan ▶ ▶ 2 2026 7 23 2 / 30
+## 二分图及其判定
 
-1 a q [ ℓ, r ] a ℓ + a ℓ +1 + · · · + a r S i = ∑ i j =1 a i (0 ≤ i ≤ n ) ∑ r i = ℓ a i = S r − S ℓ − 1 2026 7 23 3 / 30
+郑欣 2025年7月22日
 
-1 a q [ ℓ, r ] a ℓ + a ℓ +1 + · · · + a r S i = ∑ i j =1 a i (0 ≤ i ≤ n ) ∑ r i = ℓ a i = S r − S ℓ − 1 2 a i q ℓ, r ℓ r S i 1 1 i ℓ r S ℓ + S r − S u − S p u p u u u (1 , ℓ ) (1 , r ) u ℓ r 2026 7 23 3 / 30
+---
 
-u v Lowest Common Ancestor, LCA u v lca ( u , v ) • lca ( u , v ) = u u v • lca ( u , v ) ̸ ∈ { u , v } u v lca ( u , v ) • lca ( u , v ) u v 2026 7 23 4 / 30
+## 1 二分图判定
 
-u dep u dep u ≥ dep v • u v u u p u dep u = dep v • u ← p u v ← p v u = v O ( n ) 2026 7 23 5 / 30
+定义：图 G 是二分图，若 G 的点集能够被划分成两个集合，且这两个集合内部均没有边。
 
-Step 1: dep u > dep v u ← p u dep u = dep v anc i ( u ) u i u ← anc dep u − dep v ( u ) dep u = dep v anc dep u − dep v ( u ) 2026 7 23 6 / 30
+性质：
 
-Step 1: dep u > dep v u ← p u dep u = dep v anc i ( u ) u i u ← anc dep u − dep v ( u ) dep u = dep v anc dep u − dep v ( u ) anc 2 i ( u ) anc 2 0 ( u ) = p u anc 2 i +1 ( u ) = anc 2 i ◦ anc 2 i ( u ) anc k ( u ) k k = 2 k 0 + 2 k 1 + . . . anc k ( u ) = · · · ◦ anc 2 k 1 ◦ anc 2 k 0 ( u ) O ( n log n ) O ( log n ) O ( n log n ) 2026 7 23 6 / 30
+- G 是二分图，当且仅当可以对 G 的点集黑白染色，使得所有边的两个顶点颜色互不相同。
+- G 是二分图，当且仅当 G 没有长度为奇数的环。
 
-Step 2: u ← p u v ← p v u = v • log n 0 i • anc 2 i ( u ) = anc 2 i ( v ) u ← anc 2 i ( u ) , v ← anc 2 i ( v ) u , v • p u p v LCA O ( log n ) 2026 7 23 7 / 30
+观察：对于二分图一个连通块，如果确定了某个点的染色，则该连通块的染色方案唯一。
 
-Code // https://www.luogu.com.cn/record/165936526 void init() { // (DFS par dep ) for ( int u = 1; u <= n; ++u) anc[0][u] = par[u]; for ( int i = 0; i < logn; ++i) for ( int u = 1; u <= n; ++u) anc[i + 1][u] = anc[i][anc[i][u]]; } int lca( int u, int v) { if (dep[u] < dep[v]) swap(u, v); // dep u ≥ dep v // Step 1: u dep u = dep v for ( int i = logn; i >= 0; --i) if (dep[u] - (1 << i) >= dep[v]) u = anc[i][u]; if (u == v) return u; // Step 2: u , v u = v for ( int i = logn; i >= 0; --i) if (anc[i][u] != anc[i][v]) u = anc[i][u], v = anc[i][v]; return par[u]; // u , v u ̸ = v lca ( u , v ) } 2026 7 23 8 / 30
+---
 
-( a 1 , a 2 , . . . , a 2 n − 1 ) ( a 1 = a 2 n − 1 = 1) u t u Code vector< int > a(1); // vector< int > t(n + 1); // t[u]: u a void dfs( int u) { t[u] = a.size(); // a.size() u a a.push_back(u); for ( auto v: G[u]) { if (!t[v]) { dfs(v); a.push_back(u); } } } 2026 7 23 9 / 30
+## 例题 1
 
-u v lca ( u , v ) t lca ( u , v ) = min t u ≤ i ≤ t v t a i • u u T 1 u T 2 u . . . u ◦ u v r u , v r ◦ u v r u , v r • v u t u ≤ t v a t ST t O ( n log n ) O (1) O ( n log n ) 2026 7 23 10 / 30
+Luogu P1330 封锁阳光大学
 
-Code // https://www.luogu.com.cn/record/165950526 vector<vector< int >> st(logn, vector< int >(2 * n)); unordered_map< int , int > mp; void init() { // (DFS a , t ) for ( int i = 1; i <= n; ++i) mp[t[i]] = i; // t id // st [ u , u + 2 i ) t const int logn = 21; for ( int u = 1; u < 2 * n; ++u) st[0][u] = t[a[u]]; for ( int i = 0; i < logn; ++i) for ( int u = 1; u + (1 << i) < 2 * n; ++u) st[i + 1][u] = min(st[i][u], st[i][u + (1 << i)]); } int lca( int u, int v) { int l = t[u], r = t[v]; if (l > r) swap(l, r); int i = __lg(r - l + 1); int mint = min(st[i][l], st[i][r + 1 - (1 << i)]); return mp[mint]; } 2026 7 23 11 / 30
+给一个无向简单图，要求选择尽可能少的点，使得每条边的两个端点中有且仅有一个点被选择（可能无解）。
 
-• max u ≤ w ≤ v dep u + dep v − 2 dep w • 2026 7 23 12 / 30
+范围：n ≤ 1e4, m ≤ 1e5
 
-Tarjan LCA • • DFS u u ( u , v ) v lca ( u , v ) v • u u p u O ( n + Q α ( n )) Tarjan 2026 7 23 13 / 30
+每个连通块的答案独立，因此可以分别处理每个连通块最后叠加答案。
 
-Tarjan Code // https://www.luogu.com.cn/record/165956083 vector< int > ans(q + 1); vector< int > vis(n + 1); DSU S(n + 1); // void dfs( int u) { vis[u] = 1; for ( auto v: G[u]) { if (!vis[v]) { dfs(v); // v S.par[v] = u; // v v u } } // u ( u , v ) for ( auto [v, i]: Q[u]) { // v v if (vis[v]) ans[i] = S.root(v); } } Tarjan 2026 7 23 14 / 30
+对于每个点：选择 = 染成黑色；不选 = 染成白色。
 
-log n LCA LCA 2026 7 23 15 / 30
+每条边的两个端点恰好选择一个 ⇒ 两个端点颜色不同。
 
-1 Luogu P3398 sugar Q 4 a , b , c , d a b c d n , Q ≤ 10 5 2026 7 23 16 / 30
+问题等价于对二分图黑白染色，使得黑色点数量最少（不是二分图则无解）。
 
-1 Luogu P3398 sugar Q 4 a , b , c , d a b c d n , Q ≤ 10 5 lca ( a , b ) c d lca ( c , d ) a b • a b lca ( a , b ) • lca • u v u v v 2026 7 23 16 / 30
+二分图中的每个连通块有且仅有两种染色方案，每个连通块的贡献为 min{黑色, 白色}。
 
-2 AHOI2008 Q x , y , z min v ∈ V dis ( x , v ) + dis ( y , v ) + dis ( z , v ) n , Q ≤ 5 · 10 5 2026 7 23 17 / 30
+方案数？2^连通块数量
 
-2 AHOI2008 Q x , y , z min v ∈ V dis ( x , v ) + dis ( y , v ) + dis ( z , v ) n , Q ≤ 5 · 10 5 { x , y , z } v 2026 7 23 17 / 30
+---
 
-2 AHOI2008 Q x , y , z min v ∈ V dis ( x , v ) + dis ( y , v ) + dis ( z , v ) n , Q ≤ 5 · 10 5 { x , y , z } v v lca ( x , y ) , lca ( y , z ) , lca ( z , x ) • lca ( x , y ) = lca ( y , z ) = lca ( z , x ) x , y , z lca ( x , y , z ) • u = lca ( x , y , z ) x , y u z lca ( x , z ) = lca ( y , z ) = u v = lca ( x , y ) ( x , v ) , ( y , v ) , ( z , v ) 2026 7 23 17 / 30
+## 例题 2
 
-3 Luogu P6374 n Q ( a , b , c ) i i lca ( a , b ) = c n ≤ 5 · 10 5 , Q ≤ 2 · 10 5 ̸ 2026 7 23 18 / 30
+开灯
 
-3 Luogu P6374 n Q ( a , b , c ) i i lca ( a , b ) = c n ≤ 5 · 10 5 , Q ≤ 2 · 10 5 c a b 0 c ̸ ∈ { a , b } n − a − b 1 siz u u • c = lca ( a , b ) a , b c a ′ , b ′ n − siz a ′ − siz b ′ • c lca ( a , b ) a siz c − siz a ′ • c lca ( a , b ) b siz c − siz b ′ c = a b 2026 7 23 18 / 30
+有 n 个开关 m 个灯，每个灯被恰好两个开关控制。按一个开关会切换它所控制的所有灯的状态。一开始每个灯的状态为 a_i，问最少按多少次可以使所有灯都打开。
 
-4 NOIP2013 Q u , v u v n ≤ 10 4 , m ≤ 5 · 10 4 , Q ≤ 3 · 10 4 2026 7 23 19 / 30
+范围：n ≤ 2e5, m ≤ 4e5
 
-4 NOIP2013 Q u , v u v n ≤ 10 4 , m ≤ 5 · 10 4 , Q ≤ 3 · 10 4 u , v ( u , v ) u v 2026 7 23 19 / 30
+每个开关按两次是没用的。
 
-5 LOJ 10137 3 a , b , c a ′ , b ′ , c ′ ≤ 10 9 2026 7 23 20 / 30
+每个灯被两个开关控制：灯 ⇒ 边；开关 ⇒ 点。
 
-5 LOJ 10137 3 a , b , c a ′ , b ′ , c ′ ≤ 10 9 3 ( a , b , c ) • b a (2 a − b , a , c ) • b c ( a , c , 2 c − b ) • a c b ◦ b − a < c − b a ( b , 2 b − a , c ) ◦ b − a > c − b c ( a , 2 b − c , b ) 2026 7 23 20 / 30
+如果 a_i = 0：每条边只有一个端点能按；a_i = 1：每条边两个端点必须都被按/都不按
 
-5 LOJ 10137 3 a , b , c a ′ , b ′ , c ′ ≤ 10 9 3 ( a , b , c ) • b a (2 a − b , a , c ) • b c ( a , c , 2 c − b ) • a c b ◦ b − a < c − b a ( b , 2 b − a , c ) ◦ b − a > c − b c ( a , 2 b − c , b ) ( a , b , c ) ( x , y , z ) { ( a , b , c ) : a + c = 2 b } 2026 7 23 20 / 30
+⇒ 每条边只要确定了一个端点是否被按，那么另一个端点也被确定了。
 
-5 ( a , b , c ) ( a ′ , b ′ , c ′ ) ( a , b , c ) ( a ′ , b ′ , c ′ ) • ( a , b , c ) • ( a , b , c ) ( a ′ , b ′ , c ′ ) LCA ( a , b , c ) k O ( log 2 | W | ) . 2026 7 23 21 / 30
+类似二分图染色，每个连通块有且仅有两种染色方案。每个连通块的贡献为出现较少的颜色数量。
 
-1 2 2026 7 23 22 / 30
+---
 
-1 a q [ ℓ, r ] a ℓ , a ℓ +1 , . . . , a r k d i = a i − a i +1 (1 ≤ i ≤ n ) a 0 = 0 [ ℓ, r ] d ℓ − 1 ← d ℓ − 1 − k d r ← d r + k a i = ∑ n j = i d j 2026 7 23 23 / 30
+## 例题 3
 
-1 a q [ ℓ, r ] a ℓ , a ℓ +1 , . . . , a r k d i = a i − a i +1 (1 ≤ i ≤ n ) a 0 = 0 [ ℓ, r ] d ℓ − 1 ← d ℓ − 1 − k d r ← d r + k a i = ∑ n j = i d j d j [1 , j ] +1 • j ≥ i [1 , j ] a i a i = ∑ j ≥ i d j • [ ℓ, r ] + k [1 , r ] + k [1 , ℓ − 1] − k 2026 7 23 23 / 30
+NOIP2010 关押罪犯
 
-2 a i q ℓ, r ℓ r k d j 1 j +1 • j i [1 , j ] a i a i = ∑ j ∈ T i d j T i i • [ ℓ, r ] + k [1 , ℓ ] + k [1 , r ] + k [1 , lca ( ℓ, r )] − k [1 , p lca ( ℓ, r ) ] − k d i d i = a i − ∑ j ∈ son i a j 2026 7 23 24 / 30
+给一个无向带权图，要求将所有点划分为两个集合，最小化两个集合内部的边权最大值。
 
-1 1 Q 2026 7 23 25 / 30
+范围：n ≤ 2e4, m ≤ 1e5
 
-1 1 Q DFS [ dfn u , dfn u + siz u ) Q log n 2026 7 23 25 / 30
+考虑二分答案：判断是否存在一种划分方案，使得集合内部边权最大值不超过 x，即集合内不存在 > x 的边。
 
-2 2 Q 2026 7 23 26 / 30
+对于确定的 x，我们可以无视 ≤ x 的边。则问题变为将每条 > x 的边的两个端点划分入不同集合，因此只需判断 > x 的边构成的子图是否为二分图即可。复杂度 O(m log m)。
 
-2 2 Q d i [1 , i ] u ( dep i − dep u + 1) · d i i u a u = ∑ i ∈ T u ( dep i − dep u + 1) · d i = ∑ i ∈ T u dep i · d i + ( − dep u + 1) ∑ i ∈ T u d i DFS d i dep i · d i Q log n 2026 7 23 26 / 30
+事实上这题也可以不用二分。可以将边从大到小排序一条条插入到图中，动态维护这个图是不是二分图，直到插入某条边时图不是二分图，答案即为这条边的边权。
 
-3 NOIP2015 m ( u i , v i ) 0 max 1 ≤ i ≤ m dis ( u i , v i ) n , m ≤ 3 · 10 5 2026 7 23 27 / 30
+---
 
-3 NOIP2015 m ( u i , v i ) 0 max 1 ≤ i ≤ m dis ( u i , v i ) n , m ≤ 3 · 10 5 x > x > x 0 ≤ x 2026 7 23 27 / 30
+操作：
 
-3 NOIP2015 m ( u i , v i ) 0 max 1 ≤ i ≤ m dis ( u i , v i ) n , m ≤ 3 · 10 5 x > x > x 0 ≤ x +1 = m 2026 7 23 27 / 30
+- 加入一条边；
+- 判断当前图是否为二分图。
 
-4 NOIP2016 1 m 0 i s i t i i i w i n , m ≤ 3 · 10 5 2026 7 23 28 / 30
+并查集维护染色方案：
 
-4 NOIP2016 1 m 0 i s i t i i i w i n , m ≤ 3 · 10 5 a u a u [ i ] u i • u , v [ u , v ] i a i [ dis ( u , i )] ← +1 • 1 u , t , k [1 , u ] v a v [ t + ( dep u − dep v )] ← + k • 2 u , t , k [1 , u ] v a v [ t − ( dep u − dep v )] ← + k 2026 7 23 28 / 30
+- 将每个点 v ∈ V 拆成 v_0 和 v_1 两个点，分别表示染色成白色和黑色；
+- 若加入边 (u, v)，则合并 u_0, v_1 与 u_1, v_0，表示 u, v 的颜色不同；
+- 若合并后 u_0 和 u_1 在同一个连通块，则这个图不是二分图。
 
-4 1 2 b v [ i ] = a v [ i − dep v ] 1 b v [ t + dep u ] ← + k b • u , k d u [ t + dep u ] ← + k • u ( ∑ v ∈ T u d v ) [ t + dep v ] map O (( m + n ) log n ) 2026 7 23 29 / 30
+---
 
-Thanks 2026 7 23 30 / 30
+## 例题 4
+
+Luogu P1285 队员分组
+
+给一个有向图，要求将这个图的点集划分为 A, B 两个集合，使得 A 和 B 的生成子图均为完全图（即对于任意 u, v ∈ A 或 u, v ∈ B，均存在 (u, v) 和 (v, u) 两条边），且 A 和 B 的大小相差最小（可能无解）。
+
+范围：n ≤ 100, m ≤ n(n-1)
+
+观察1：只有当边 (u, v) 和 (v, u) 同时存在时 (u, v) 才是有用的，否则如果只有 (u, v)，u 和 v 无法被分到同一个集合。因此可以将有向图只保留双向边变为无向图。
+
+观察2：当且仅当补图不是二分图时无解。
+
+考虑补图。问题变为将二分图的点集分为 A, B 两部分使得集合内部没有边且 ||A|-|B|| 最小，即 |A| 尽可能接近 n/2。
+
+连通块之间独立，且每个连通块黑白染色后只能把所有黑点或所有白点加入 A。用 01 背包即可求出 |A| 的所有可能值。时间复杂度 O(n²)。
+
+---
+
+## 例题 5
+
+Luogu P6185 序列
+
+有两个长为 n 的序列 a, b 以及 m 种可选操作，每个操作可以用三元组 (t, u, v) 描述（u, v 可能相等）：
+
+- 若 t=1，则令 a_u ← a_u ± 1，a_v ← a_v ∓ 1；
+- 若 t=2，则令 a_u ← a_u ± 1，a_v ← a_v ± 1。
+
+问是否能够执行任意多次操作将 a 变成 b。
+
+范围：n, m ≤ 1e5
+
+问题等价于问能否把 a 变成全 0 序列。
+
+对序列 a 建图：n 个点，第 v 个点的点权为 a_v，对每个操作 (u, v) 连一条边。
+
+操作1：同一个连通块内 a 可以变成 0 当且仅当点权和为 0。
+
+因此可以把操作 1 形成的连通块缩点，点权变为缩点前的点权之和。
+
+操作2：对于一个连通块，如果不是二分图只要点权和是偶数就可以，否则需要二分图两边点权和相等。
+
+---
+
+谢谢
