@@ -1,9 +1,9 @@
 import { defineConfig } from 'vitepress'
 
 export default defineConfig({
-  base: '/OI笔记站/',
+  base: '/oi-notes/',
   // srcDir: 'docs',
-  title: "我的 OI 笔记",
+  title: "OI 笔记站",
   description: "备战 NOIP 的知识库",
 
   themeConfig: {
