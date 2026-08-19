@@ -20,31 +20,7 @@
         h1 { color: #1e2a3a; font-size: 2.8rem; margin-bottom: 8px; }
         p.sub { color: #555; margin-bottom: 30px; font-size: 1.1rem; }
 
-        /* 大博客按钮（独占一行） */
-        .main-btn-wrap {
-            width: 100%;
-            max-width: 500px;
-            margin-bottom: 16px;
-        }
-        .main-btn-wrap a {
-            display: block;
-            width: 100%;
-            padding: 18px 0;
-            background: #2c3e5a;
-            color: white;
-            text-decoration: none;
-            border-radius: 12px;
-            font-size: 1.8rem;
-            font-weight: 600;
-            transition: background 0.2s, transform 0.1s;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-        }
-        .main-btn-wrap a:hover {
-            background: #1a2a3a;
-            transform: translateY(-2px);
-        }
-
-        /* 下方两个按钮 */
+        /* 三个并列按钮 */
         .sub-btn-wrap {
             display: flex;
             gap: 16px;
@@ -188,7 +164,6 @@
             .slide-panel { width: 100%; max-width: 100%; }
             .sub-btn-wrap { flex-direction: column; gap: 12px; }
             .sub-btn-wrap a { flex: none; width: 100%; }
-            .main-btn-wrap a { font-size: 1.5rem; padding: 14px 0; }
         }
     </style>
 </head>
@@ -212,7 +187,7 @@
         <ul>
             <li>
                 <span class="version">v2.2.0</span>
-                <span class="date">· 2026-08-17</span>
+                <span class="date">· 2026-08-19</span>
                 <span class="desc">新增「个人博客」子站点</span>
             </li>
             <li>
@@ -248,15 +223,11 @@
     <h1>🚀 KBP 的资源站</h1>
     <p class="sub">欢迎访问我的个人资源导航中心</p>
 
-    <!-- 大博客按钮（独占一行） -->
-    <div class="main-btn-wrap">
-        <a href="/blog/">📝 个人博客</a>
-    </div>
-
-    <!-- 下方两个并列按钮 -->
+    <!-- 三个并列按钮 -->
     <div class="sub-btn-wrap">
         <a href="/oi-notes/">📚 OI 笔记站</a>
         <a href="/物理小球/">🎱 物理小球</a>
+        <a href="/blog/">📝 我的博客</a>
     </div>
 
     <!-- 统计（你的不蒜子，原样保留） -->
