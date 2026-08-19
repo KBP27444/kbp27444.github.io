@@ -1,0 +1,32 @@
+---
+layout: home
+
+hero:
+  name: "我的 OI 笔记"
+  text: "备战 NOIP 的知识库"
+  tagline: 算法 · 数据结构 · 模板 · 题解
+  actions:
+    - theme: brand
+      text: 开始阅读 →
+      link: 目录
+    - theme: alt
+      text: GitHub 仓库
+      link: https://github.com/KBP27444/kbp27444.github.io
+
+features:
+  - title: 📚 算法
+    details: 排序、二分、贪心、图论、动态规划...
+  - title: 🗂️ 数据结构
+    details: 线段树、树状数组、并查集、平衡树...
+  - title: ⚡ 模板
+    details: 快读、二分、最短路、最小生成树...
+---
+
+<div style="text-align: center; color: #888; font-size: 14px; margin-top: 40px; padding-top: 20px; border-top: 1px solid #eee;">
+  今日总访问量 <span id="busuanzi_today_pv">加载中...</span> 次 &nbsp;|&nbsp;
+  今日总访客数 <span id="busuanzi_today_uv">加载中...</span> 人 <br>
+  本站总访问量 <span id="busuanzi_site_pv">加载中...</span> 次 &nbsp;|&nbsp;
+  本站总访客数 <span id="busuanzi_site_uv">加载中...</span> 人 <br>
+  本页总阅读量 <span id="busuanzi_page_pv">加载中...</span> 次 &nbsp;|&nbsp;
+  本页总访客数 <span id="busuanzi_page_uv">加载中...</span> 人
+</div>

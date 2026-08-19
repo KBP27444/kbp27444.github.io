@@ -4,10 +4,15 @@
   "description": "\"# kbp27444.github.io\"",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "docs:dev": "vitepress dev docs",
-    "docs:build": "vitepress build docs",
-    "docs:preview": "vitepress preview docs"
+    "dev:oi": "vitepress dev sources/oi-notes",
+    "dev:blog": "vitepress dev sources/blog",
+    "build:oi": "vitepress build sources/oi-notes",
+    "build:blog": "vitepress build sources/blog",
+    "build:all": "npm run build:oi && npm run build:blog",
+    "preview:oi": "vitepress preview sources/oi-notes",
+    "preview:blog": "vitepress preview sources/blog",
+    "copy:blog": "xcopy /E /I sources\\blog\\.vitepress\\dist blog",
+    "deploy:blog": "npm run build:blog && npm run copy:blog"
   },
   "repository": {
     "type": "git",

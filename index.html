@@ -17,20 +17,55 @@
             justify-content: center;
             align-items: center;
         }
-        h1 { color: #1e2a3a; font-size: 2.5rem; margin-bottom: 10px; }
-        p.sub { color: #555; margin-bottom: 30px; }
-        .links a {
-            display: inline-block;
-            margin: 10px 20px;
-            padding: 16px 32px;
+        h1 { color: #1e2a3a; font-size: 2.8rem; margin-bottom: 8px; }
+        p.sub { color: #555; margin-bottom: 30px; font-size: 1.1rem; }
+
+        /* 大博客按钮（独占一行） */
+        .main-btn-wrap {
+            width: 100%;
+            max-width: 500px;
+            margin-bottom: 16px;
+        }
+        .main-btn-wrap a {
+            display: block;
+            width: 100%;
+            padding: 18px 0;
+            background: #2c3e5a;
+            color: white;
+            text-decoration: none;
+            border-radius: 12px;
+            font-size: 1.8rem;
+            font-weight: 600;
+            transition: background 0.2s, transform 0.1s;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        }
+        .main-btn-wrap a:hover {
+            background: #1a2a3a;
+            transform: translateY(-2px);
+        }
+
+        /* 下方两个按钮 */
+        .sub-btn-wrap {
+            display: flex;
+            gap: 16px;
+            width: 100%;
+            max-width: 500px;
+            justify-content: center;
+        }
+        .sub-btn-wrap a {
+            flex: 1;
+            padding: 16px 0;
             background: #1e2a3a;
             color: white;
             text-decoration: none;
-            border-radius: 8px;
+            border-radius: 10px;
             font-size: 1.2rem;
             transition: background 0.2s;
+            text-align: center;
         }
-        .links a:hover { background: #2c3e5a; }
+        .sub-btn-wrap a:hover {
+            background: #2c3e5a;
+        }
 
         /* 右上角更新日志按钮 */
         .changelog-btn {
@@ -151,10 +186,15 @@
 
         @media (max-width: 480px) {
             .slide-panel { width: 100%; max-width: 100%; }
-            .links a { display: block; margin: 12px 0; }
+            .sub-btn-wrap { flex-direction: column; gap: 12px; }
+            .sub-btn-wrap a { flex: none; width: 100%; }
+            .main-btn-wrap a { font-size: 1.5rem; padding: 14px 0; }
         }
     </style>
 </head>
+
+<script src="//cdn.busuanzi.cc/busuanzi/3.6.9/busuanzi.min.js" defer></script>
+
 <body>
 
     <!-- 右上角按钮 -->
@@ -170,11 +210,16 @@
             <button class="close-btn" id="closePanel">&times;</button>
         </h2>
         <ul>
-	    <li>
-    		<span class="version">v2.1.1</span>
-    		<span class="date">· 2026-08-17</span>
-    		<span class="desc">修复 OI 笔记站子目录下导航栏链接路径错误的问题</span>
-	    </li>
+            <li>
+                <span class="version">v2.2.0</span>
+                <span class="date">· 2026-08-17</span>
+                <span class="desc">新增「个人博客」子站点</span>
+            </li>
+            <li>
+                <span class="version">v2.1.1</span>
+                <span class="date">· 2026-08-17</span>
+                <span class="desc">修复 OI 笔记站子目录下导航栏链接路径错误的问题</span>
+            </li>
             <li>
                 <span class="version">v2.1.0</span>
                 <span class="date">· 2026-08-14</span>
@@ -183,7 +228,7 @@
             <li>
                 <span class="version">v2.0.0</span>
                 <span class="date">· 2026-08-14</span>
-                <span class="desc">笔记站迁移至 <code>/OI笔记站/</code> 子目录；根目录改为导航页</span>
+                <span class="desc">笔记站迁移至 <code>/oi-notes/</code> 子目录；根目录改为导航页</span>
             </li>
             <li>
                 <span class="version">v1.1.0</span>
@@ -196,16 +241,32 @@
                 <span class="desc">网站搭建完成（简易 OJ 页面），绑定域名</span>
             </li>
         </ul>
-        <div class="footer-note">当前版本：v2.1.1</div>
+        <div class="footer-note">当前版本：v2.2.0</div>
     </div>
 
     <!-- 主内容 -->
     <h1>🚀 KBP 的资源站</h1>
     <p class="sub">欢迎访问我的个人资源导航中心</p>
-    <div class="links">
+
+    <!-- 大博客按钮（独占一行） -->
+    <div class="main-btn-wrap">
+        <a href="/blog/">📝 个人博客</a>
+    </div>
+
+    <!-- 下方两个并列按钮 -->
+    <div class="sub-btn-wrap">
         <a href="/oi-notes/">📚 OI 笔记站</a>
         <a href="/物理小球/">🎱 物理小球</a>
-        <!-- 以后可以在这里添加更多链接 -->
+    </div>
+
+    <!-- 统计（你的不蒜子，原样保留） -->
+    <div style="margin-top: 30px; color: #888; font-size: 14px;">
+        今日总访问量 <span id="busuanzi_today_pv">加载中...</span> 次
+        今日总访客数 <span id="busuanzi_today_uv">加载中...</span> 人
+        本站总访问量 <span id="busuanzi_site_pv">加载中...</span> 次
+        本站总访客数 <span id="busuanzi_site_uv">加载中...</span> 人
+        本页总阅读量 <span id="busuanzi_page_pv">加载中...</span> 次
+        本页总访客数 <span id="busuanzi_page_uv">加载中...</span> 人
     </div>
 
     <script>
@@ -227,10 +288,10 @@
         closeBtn.addEventListener('click', closePanelFn);
         overlay.addEventListener('click', closePanelFn);
 
-        // ESC 键关闭
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') closePanelFn();
         });
     </script>
+
 </body>
 </html>
