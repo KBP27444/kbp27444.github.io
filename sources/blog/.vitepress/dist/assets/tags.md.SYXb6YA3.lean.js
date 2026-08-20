@@ -1,0 +1,1 @@
+import{_ as a,o as p,c as e,a0 as s}from"./chunks/framework.Dc6_lTLx.js";const l=JSON.parse('{"title":"","description":"","frontmatter":{},"headers":[],"relativePath":"tags.md","filePath":"tags.md"}'),_={name:"tags.md"};function o(r,t,n,c,g,i){return p(),e("div",null,[...t[0]||(t[0]=[s("",11)])])}const m=a(_,[["render",o]]);export{l as __pageData,m as default};

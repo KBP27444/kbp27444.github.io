@@ -28,5 +28,8 @@
   "homepage": "https://github.com/KBP27444/kbp27444.github.io#readme",
   "devDependencies": {
     "vitepress": "^1.6.4"
+  },
+  "dependencies": {
+    "gray-matter": "^4.0.3"
   }
 }
