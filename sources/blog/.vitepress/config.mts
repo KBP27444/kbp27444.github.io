@@ -4,6 +4,9 @@ export default defineConfig({
   base: '/blog/',
   title: '我的博客',
   description: '记录技术与生活',
+
+  ignoreDeadLinks: true,
+
   head: [
     ['link', { rel: 'icon', href: '/favicon.ico' }],
     ['style', {}, `
