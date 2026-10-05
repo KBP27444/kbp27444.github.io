@@ -6,13 +6,18 @@
   "scripts": {
     "dev:oi": "vitepress dev sources/oi-notes",
     "dev:blog": "vitepress dev sources/blog",
+    "dev:tools": "vitepress dev sources/tools",
     "build:oi": "vitepress build sources/oi-notes",
     "build:blog": "vitepress build sources/blog",
-    "build:all": "npm run build:oi && npm run build:blog",
+    "build:tools": "vitepress build sources/tools",
+    "build:all": "npm run build:oi && npm run build:blog && npm run build:tools",
     "preview:oi": "vitepress preview sources/oi-notes",
     "preview:blog": "vitepress preview sources/blog",
+    "preview:tools": "vitepress preview sources/tools",
     "copy:blog": "xcopy /E /I sources\\blog\\.vitepress\\dist blog",
-    "deploy:blog": "npm run build:blog && npm run copy:blog"
+    "copy:tools": "xcopy /E /I /Y sources\\tools\\.vitepress\\dist tools",
+    "deploy:blog": "npm run build:blog && npm run copy:blog",
+    "deploy:tools": "npm run build:tools && npm run copy:tools"
   },
   "repository": {
     "type": "git",

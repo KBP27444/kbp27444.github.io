@@ -1,0 +1,425 @@
+/* ===========================================================
+   /tools 站点样式
+   设计令牌全部取自首页 index.html：主色 #1e2a3a、hover #2c3e5a、
+   页面底 #f0f2f5、圆角 10px、字体 Segoe UI；强调色 #3b82f6 沿用博客站。
+   =========================================================== */
+
+:root {
+  --tools-ink: #1e2a3a;
+  --tools-ink-hover: #2c3e5a;
+  --tools-accent: #3b82f6;
+  --tools-bg: #f0f2f5;
+  --tools-surface: #ffffff;
+  --tools-border: #e5e7eb;
+  --tools-border-strong: #d7dde5;
+  --tools-text: #1f2937;
+  --tools-muted: #6b7280;
+  --tools-muted-light: #9aa3af;
+  --tools-soft: #eef2f7;
+  --tools-radius: 10px;
+}
+
+.dark {
+  --tools-bg: #16181d;
+  --tools-surface: #1e2128;
+  --tools-border: #2e3239;
+  --tools-border-strong: #3b414a;
+  --tools-text: #e5e7eb;
+  --tools-muted: #9aa3af;
+  --tools-muted-light: #6b7280;
+  --tools-soft: #262a32;
+}
+
+body {
+  font-family: 'Segoe UI', 'Microsoft YaHei', sans-serif;
+}
+
+/* 首页使用 layout: page，去掉默认的居中留白，让内容横向铺开 */
+.tools-home {
+  max-width: 1220px;
+  margin: 0 auto;
+  padding: 28px 24px 64px;
+}
+
+.tools-home__inner {
+  display: grid;
+  grid-template-columns: 200px minmax(0, 1fr);
+  gap: 32px;
+  align-items: start;
+}
+
+/* ---------------- 左侧分类栏（分段控制器，方案 B） ---------------- */
+
+.tools-nav {
+  position: sticky;
+  top: calc(var(--vp-nav-height) + 24px);
+}
+
+.tools-nav__title {
+  margin: 0 0 8px;
+  padding-left: 10px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--tools-muted-light);
+  text-transform: uppercase;
+}
+
+.segmented {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  padding: 6px;
+  background: var(--tools-bg);
+  border: 1px solid var(--tools-border);
+  border-radius: 12px;
+}
+
+.dark .segmented {
+  background: var(--tools-soft);
+}
+
+.segmented__item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  padding: 9px 10px;
+  font-family: inherit;
+  font-size: 0.9rem;
+  color: var(--tools-muted);
+  background: transparent;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+}
+
+.segmented__item:hover {
+  color: var(--tools-ink);
+  background: rgba(255, 255, 255, 0.7);
+}
+
+.dark .segmented__item:hover {
+  color: var(--tools-text);
+  background: rgba(255, 255, 255, 0.05);
+}
+
+.segmented__item.is-active {
+  color: var(--tools-ink);
+  font-weight: 600;
+  background: var(--tools-surface);
+  box-shadow: 0 1px 3px rgba(30, 42, 58, 0.16);
+}
+
+.dark .segmented__item.is-active {
+  color: var(--tools-text);
+}
+
+.segmented__icon {
+  flex: none;
+  font-size: 1rem;
+}
+
+.segmented__label {
+  flex: 1;
+  min-width: 0;
+}
+
+.segmented__count {
+  flex: none;
+  padding: 1px 7px;
+  font-size: 0.72rem;
+  color: var(--tools-muted);
+  background: rgba(30, 42, 58, 0.07);
+  border-radius: 10px;
+}
+
+.segmented__item.is-active .segmented__count {
+  color: #fff;
+  background: var(--tools-ink);
+}
+
+/* ---------------- 右侧卡片网格 ---------------- */
+
+.tools-panel__head {
+  margin-bottom: 20px;
+}
+
+.tools-panel__title {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin: 0 0 6px;
+  padding: 0;
+  font-size: 1.45rem;
+  font-weight: 600;
+  color: var(--tools-ink);
+  border: none;
+  line-height: 1.3;
+}
+
+.dark .tools-panel__title {
+  color: var(--tools-text);
+}
+
+.tools-panel__desc {
+  margin: 0;
+  font-size: 0.92rem;
+  color: var(--tools-muted);
+  line-height: 1.6;
+}
+
+.tool-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(270px, 1fr));
+  gap: 16px;
+}
+
+.tool-empty {
+  padding: 40px 20px;
+  color: var(--tools-muted);
+  text-align: center;
+  background: var(--tools-surface);
+  border: 1px dashed var(--tools-border-strong);
+  border-radius: var(--tools-radius);
+}
+
+/* ---------------- 工具卡片（方案 A：白底描边，克制） ---------------- */
+
+.tool-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 18px 18px 16px;
+  text-decoration: none;
+  background: var(--tools-surface);
+  border: 1px solid var(--tools-border);
+  border-radius: var(--tools-radius);
+  box-shadow: 0 1px 3px rgba(30, 42, 58, 0.04);
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.tool-card:hover {
+  border-color: var(--tools-ink);
+  box-shadow: 0 6px 18px rgba(30, 42, 58, 0.1);
+  transform: translateY(-2px);
+}
+
+.tool-card__head {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.tool-card__icon {
+  display: flex;
+  flex: none;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  font-size: 1.05rem;
+  background: var(--tools-soft);
+  border-radius: 9px;
+}
+
+.tool-card__name {
+  margin: 0;
+  font-size: 1.02rem;
+  font-weight: 600;
+  line-height: 1.4;
+  color: var(--tools-ink);
+}
+
+.dark .tool-card__name {
+  color: var(--tools-text);
+}
+
+.tool-card__summary {
+  flex: 1;
+  margin: 0;
+  font-size: 0.88rem;
+  line-height: 1.65;
+  color: var(--tools-muted);
+}
+
+.tool-card__foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding-top: 12px;
+  border-top: 1px solid var(--tools-border);
+}
+
+.tool-card__tags {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.tool-tag {
+  padding: 2px 9px;
+  font-size: 0.75rem;
+  color: var(--tools-ink);
+  background: var(--tools-soft);
+  border-radius: 20px;
+}
+
+.tool-card__version {
+  font-size: 0.75rem;
+  color: var(--tools-muted-light);
+}
+
+.tool-card__more {
+  flex: none;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tools-ink);
+  transition: color 0.18s;
+}
+
+.tool-card:hover .tool-card__more {
+  color: var(--tools-accent);
+}
+
+/* ---------------- 详情页：返回链接 + 下载按钮 ---------------- */
+
+.back-to-list {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-bottom: 18px;
+  padding: 6px 14px 6px 10px;
+  font-size: 0.85rem;
+  color: var(--tools-muted);
+  text-decoration: none;
+  background: var(--tools-surface);
+  border: 1px solid var(--tools-border);
+  border-radius: 20px;
+  transition: color 0.18s, border-color 0.18s;
+}
+
+.back-to-list:hover {
+  color: var(--tools-ink);
+  border-color: var(--tools-ink);
+}
+
+/* 详情页顶部的下载卡片 */
+.download-box {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin: 18px 0 26px;
+}
+
+.download-card {
+  display: flex;
+  flex: 1 1 240px;
+  flex-direction: column;
+  gap: 4px;
+  padding: 16px 18px;
+  color: var(--tools-text);
+  text-decoration: none;
+  background: var(--tools-surface);
+  border: 1px solid var(--tools-border);
+  border-radius: var(--tools-radius);
+  transition: border-color 0.18s, box-shadow 0.18s, transform 0.18s;
+}
+
+.download-card:hover {
+  border-color: var(--tools-ink);
+  box-shadow: 0 6px 18px rgba(30, 42, 58, 0.1);
+  transform: translateY(-2px);
+}
+
+.download-card__platform {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--tools-muted-light);
+  text-transform: uppercase;
+}
+
+.download-card__file {
+  font-family: 'Cascadia Code', Consolas, monospace;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tools-ink);
+  word-break: break-all;
+}
+
+.dark .download-card__file {
+  color: var(--tools-text);
+}
+
+.download-card__note {
+  font-size: 0.8rem;
+  color: var(--tools-muted);
+}
+
+/* ---------------- 移动端降级 ---------------- */
+
+@media (max-width: 960px) {
+  .tools-home {
+    padding: 20px 18px 56px;
+  }
+
+  .tools-home__inner {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+
+  /* 分类栏 → 顶部横向滚动胶囊条，并保持吸顶 */
+  .tools-nav {
+    position: sticky;
+    top: var(--vp-nav-height);
+    z-index: 5;
+    padding: 10px 0;
+    background: var(--vp-c-bg);
+  }
+
+  .tools-nav__title {
+    display: none;
+  }
+
+  .segmented {
+    flex-direction: row;
+    gap: 6px;
+    padding: 6px;
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+
+  .segmented::-webkit-scrollbar {
+    display: none;
+  }
+
+  .segmented__item {
+    flex: none;
+    width: auto;
+    white-space: nowrap;
+  }
+
+  .tool-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 12px;
+  }
+}
+
+@media (max-width: 620px) {
+  .tools-panel__title {
+    font-size: 1.25rem;
+  }
+
+  .tool-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .tool-card {
+    padding: 16px;
+  }
+}

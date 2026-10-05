@@ -1,0 +1,16 @@
+# 下载包存放说明（此文件不会被构建，也不会出现在站点上）
+
+把两个安装包放到本目录（`sources/tools/public/downloads/`）下，文件名必须完全一致：
+
+| 文件名 | 说明 |
+|---|---|
+| `oj-edge-extension-v1.0.0.zip` | Edge 扩展。把 `oj-edge-extension` 目录里的 `manifest.json`、`background.js`、`content-script.js`、`interceptor.js` 放在压缩包最外层打包 |
+| `oj-file-creator-1.0.0.vsix` | VSCode 扩展。在 `oj-vscode-extension` 目录执行 `vsce package` 生成 |
+
+构建后它们会自动出现在 `tools/downloads/`，线上地址为：
+
+- https://kbp.cc.cd/tools/downloads/oj-edge-extension-v1.0.0.zip
+- https://kbp.cc.cd/tools/downloads/oj-file-creator-1.0.0.vsix
+
+页面里的下载链接写的是 `/downloads/<文件名>`（不带 `/tools/` 前缀），VitePress 会自动补 base。
+不要手动往产物侧的 `tools/downloads/` 拷文件，那里每次构建都会被重写。

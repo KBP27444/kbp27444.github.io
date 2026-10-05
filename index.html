@@ -20,22 +20,24 @@
         h1 { color: #1e2a3a; font-size: 2.8rem; margin-bottom: 8px; }
         p.sub { color: #555; margin-bottom: 30px; font-size: 1.1rem; }
 
-        /* 三个并列按钮 */
+        /* 子站点入口按钮（4 个，2×2 网格） */
         .sub-btn-wrap {
             display: flex;
+            flex-wrap: wrap;
             gap: 16px;
             width: 100%;
-            max-width: 500px;
+            max-width: 560px;
             justify-content: center;
         }
         .sub-btn-wrap a {
-            flex: 1;
+            flex: 1 1 calc(50% - 8px);
+            min-width: 0;
             padding: 16px 0;
             background: #1e2a3a;
             color: white;
             text-decoration: none;
             border-radius: 10px;
-            font-size: 1.2rem;
+            font-size: 1.15rem;
             transition: background 0.2s;
             text-align: center;
         }
@@ -185,6 +187,11 @@
             <button class="close-btn" id="closePanel">&times;</button>
         </h2>
         <ul>
+        <li>
+            <span class="version">v2.4.0</span>
+            <span class="date">· 2026-10-05</span>
+            <span class="desc">🛠 新增「实用工具」子站点及首个工具：OJ 题目一键转 Markdown 扩展</span>
+        </li>
 	    <li>
     		<span class="version">v2.3.0</span>
     		<span class="date">· 2026-08-20</span>
@@ -221,18 +228,19 @@
                 <span class="desc">网站搭建完成（简易 OJ 页面），绑定域名</span>
             </li>
         </ul>
-        <div class="footer-note">当前版本：v2.2.0</div>
+        <div class="footer-note">当前版本：v2.4.0</div>
     </div>
 
     <!-- 主内容 -->
     <h1>🚀 KBP 的资源站</h1>
     <p class="sub">欢迎访问我的个人资源导航中心</p>
 
-    <!-- 三个并列按钮 -->
+    <!-- 四个子站点入口按钮（2×2） -->
     <div class="sub-btn-wrap">
         <a href="/oi-notes/">📚 OI 笔记站</a>
         <a href="/物理小球/">🎱 物理小球</a>
         <a href="/blog/">📝 我的博客</a>
+        <a href="/tools/">🛠 实用工具</a>
     </div>
 
     <!-- 统计（你的不蒜子，原样保留） -->
